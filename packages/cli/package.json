@@ -20,8 +20,8 @@
     "@phdnote/local-client": "^1.0.0"
   },
   "devDependencies": {
-    "@types/node": "^16.7.11",
     "@phdnote/local-api": "^1.0.0",
+    "@types/node": "^16.7.11",
     "commander": "^8.1.0",
     "esbuild": "0.8.26",
     "typescript": "^4.4.2"
