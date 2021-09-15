@@ -1,5 +1,4 @@
 {
-  "homepage": "http://phd208.github.io/phdnote",
   "name": "root",
   "private": true,
   "devDependencies": {
@@ -8,8 +7,6 @@
   },
   "scripts": {
     "start": "lerna run start --parallel",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "esbuild": "^0.12.28"
