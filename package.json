@@ -6,7 +6,8 @@
     "lerna": "^3.22.1"
   },
   "scripts": {
-    "start": "lerna run start --parallel",
+      "start": "lerna run start --parallel",
+      "heroku-postbuild": "npx phdnote serve"
   },
   "dependencies": {
     "esbuild": "^0.12.28"
