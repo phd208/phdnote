@@ -1,7 +1,7 @@
 import './code-editor.css';
 import './syntax.css';
 import { useRef } from 'react';
-import MonacoEditor, { EditorDidMount } from '@monaco-editor/react';
+import MonacoEditor, { Monaco } from '@monaco-editor/react';
 import prettier from 'prettier';
 import parser from 'prettier/parser-babel';
 import codeShift from 'jscodeshift';
@@ -15,7 +15,7 @@ interface CodeEditorProps {
 const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
   const editorRef = useRef<any>();
 
-  const onEditorDidMount: EditorDidMount = (getValue, monacoEditor) => {
+  const onEditorDidMount = (getValue:any, monacoEditor:any) => {
     editorRef.current = monacoEditor;
     monacoEditor.onDidChangeModelContent(() => {
       onChange(getValue());
@@ -37,12 +37,35 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
     );
   };
 
-  const onFormatClick = () => {
-    // get current value from editor
-    const unformatted = editorRef.current.getModel().getValue();
+  // const onFormatClick = () => {
+  //   // get current value from editor
+  //   const unformatted = editorRef.current.getModel().getValue();
 
-    // format that value
-    const formatted = prettier
+
+  // ORIGINAL VERSION
+  //   // format that value
+  //   const formatted = prettier
+  //     .format(unformatted, {
+  //       parser: 'babel',
+  //       plugins: [parser],
+  //       useTabs: false,
+  //       semi: true,
+  //       singleQuote: true,
+  //     })
+  //     .replace(/\n$/, '');
+
+  //   // set the formatted value back in the editor
+  //   editorRef.current.setValue(formatted);
+  // };
+
+
+  // SUGGESTED FIX
+  const onFormatClick = () => {
+    // Get current value from editor
+    const unformatted = editorRef.current.getModel().getValue();
+  
+    // Format that value asynchronously
+    prettier
       .format(unformatted, {
         parser: 'babel',
         plugins: [parser],
@@ -50,12 +73,15 @@ const CodeEditor: React.FC<CodeEditorProps> = ({ onChange, initialValue }) => {
         semi: true,
         singleQuote: true,
       })
-      .replace(/\n$/, '');
-
-    // set the formatted value back in the editor
-    editorRef.current.setValue(formatted);
+      .then((formatted) => {
+        // Set the formatted value back in the editor
+        editorRef.current.setValue(formatted.replace(/\n$/, ''));
+      })
+      .catch((error) => {
+        console.error('Error occurred while formatting:', error);
+      });
   };
-
+  
   return (
     <div className="editor-wrapper">
       <button

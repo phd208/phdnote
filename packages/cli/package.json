@@ -17,10 +17,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@phdnote/local-client": "^1.0.0"
+    "@phdnote/local-client": "^1.0.0",
+    "localforage": "^1.10.0"
   },
   "devDependencies": {
     "@phdnote/local-api": "^1.0.0",
+    "@types/localforage": "^0.0.34",
     "@types/node": "^16.7.11",
     "commander": "^8.1.0",
     "esbuild": "0.8.26",
